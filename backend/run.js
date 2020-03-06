@@ -2,20 +2,17 @@ const express = require('express')
 const path = require('path')
 const api = require('./api')
 const db = require('./db')
+const bodyParser = require('body-parser')
 
 const app = express()
 const port = 5000
 
 app.use(express.static(path.join(__dirname, '../', 'frontend', 'build')))
+app.use(bodyParser.json())
 
-//odpowiedz na pytanie /api
-//argumenty do requesta
-//typ requesta
-//wykonac odpowiednia funkcje z argumentami
-
-app.get('/api', (req, res) => {
-    const endpoint = req.query.endpoint
-    const args = req.query.args
+app.post('/api', (req, res) => {
+    const endpoint = req.body.endpoint
+    const args = req.body.args
 
     const func = api.endpointMap[endpoint]
     if(!func)
@@ -27,7 +24,10 @@ app.get('/api', (req, res) => {
         func(args)
         .then(
             (result) => res.status(200).send(result),
-            (error) => res.status(error.code).send(error)
+            (error) => {
+                console.error(error); 
+                res.status(error.code).send({ error })
+            }
         )
     }
 })
