@@ -24,3 +24,4 @@ yarn-error.log*
 
 password
 dbConfig.json
+salts.json

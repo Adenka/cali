@@ -1,19 +1,28 @@
 {
-  "name": "cali",
-  "version": "0.0.1",
-  "description": "a fancy calendar that will help you organize your daily routine <3",
-  "main": "index.js",
-  "scripts": {
-    "start": "node ./backend/run.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Adenka/cali.git"
-  },
-  "author": "Adenka, charodziej",
-  "license": "GPL-3.0",
-  "dependencies": {
-    "express": "^4.17.1",
-    "mysql": "^2.18.1"
-  }
+    "name": "cali",
+    "version": "0.0.1",
+    "description": "a fancy calendar that will help you organize your daily routine <3",
+    "main": "index.js",
+    "scripts": {
+        "start": "node ./backend/run.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Adenka/cali.git"
+    },
+    "author": "Adenka, charodziej",
+    "license": "GPL-3.0",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "mysql": "^2.18.1"
+    },
+    "prettier": {
+        "trailingComma": "es5",
+        "semi": false,
+        "tabWidth": 4,
+        "resolveGlobalModules": true,
+        "singleQuote": true,
+        "arrowParens": "always"
+    }
 }

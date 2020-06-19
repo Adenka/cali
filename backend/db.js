@@ -1,9 +1,9 @@
-const mysql  = require('mysql')
+const mysql = require('mysql')
 const config = require('./dbConfig.json')
-const util   = require('util')
+const util = require('util')
 
 var state = {
-    pool: null
+    pool: null,
 }
 
 exports.connect = (done) => {

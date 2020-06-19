@@ -15,17 +15,13 @@ app.post('/api', (req, res) => {
     const args = req.body.args
 
     const func = api.endpointMap[endpoint]
-    if(!func)
-    {
-        res.status(469).send({error: "Invaild endpoint :'("})
-    }
-    else
-    {
-        func(args)
-        .then(
+    if (!func) {
+        res.status(469).send({ error: "Invaild endpoint :'(" })
+    } else {
+        func(args).then(
             (result) => res.status(200).send(result),
             (error) => {
-                console.error(error); 
+                console.error(error)
                 res.status(error.code).send({ error })
             }
         )
@@ -33,7 +29,7 @@ app.post('/api', (req, res) => {
 })
 
 app.post('/*', (req, res) => {
-    res.status(404).send({ error: "Not found." })
+    res.status(404).send({ error: 'Not found.' })
 })
 
 app.get('/*', (req, res) => {
@@ -41,4 +37,6 @@ app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '../', 'frontend', 'build', 'index.html'))
 })
 
-db.connect(() => app.listen(port, () => console.log(`Server is running on port ${port}!`)))
+db.connect(() =>
+    app.listen(port, () => console.log(`Server is running on port ${port}!`))
+)
