@@ -7,16 +7,16 @@ import {
     IconButton,
     createMuiTheme,
     ThemeProvider,
-    SwipeableDrawer,
     Typography,
-    List,
-    ListItem,
+    Hidden,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import { makeStyles } from '@material-ui/core/styles'
 import * as colors from '@material-ui/core/colors'
 import Routes, { routes } from '../utils/Routes'
 import { SnackbarProvider } from 'notistack'
+import Drawer from './Drawer'
+import LogOutButton from './LogOutButton'
 
 const lightTheme = createMuiTheme({
     palette: {
@@ -35,19 +35,26 @@ const darkTheme = createMuiTheme({
 })
 
 const useStyles = makeStyles({
-    drawer: {
-        width: 256,
-    },
     title: {
         paddingLeft: 8,
+    },
+
+    content: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+    },
+
+    middleDiv: {
+        flexGrow: 1,
     },
 })
 
 export default function App() {
     const [theme, setTheme] = useState(darkTheme)
-    const [ifDrawerOpen, setIfDrawerOpen] = useState(false)
     const classes = useStyles()
     const url = useLocation().pathname
+    const [ifDrawerOpen, setIfDrawerOpen] = useState(false)
 
     const changeTheme = (dark) => {
         if (dark) {
@@ -61,13 +68,6 @@ export default function App() {
         matchPath(url, currRoute.path)
     )[0] || { label: '404: Not found' }
 
-    const drawerItems = [
-        { label: 'pies' },
-        { label: 'Kajtek' },
-        { label: 'kot' },
-        { label: 'nietopyrz' },
-    ]
-
     return (
         <ThemeProvider theme={theme}>
             <SnackbarProvider maxSnack={3}>
@@ -75,35 +75,26 @@ export default function App() {
                     <CssBaseline />
                     <AppBar position="static">
                         <Toolbar>
-                            <IconButton
-                                edge="start"
-                                color="inherit"
-                                onClick={() => setIfDrawerOpen(true)}
-                            >
-                                <MenuIcon />
-                            </IconButton>
+                            <Hidden lgUp>
+                                <IconButton
+                                    edge="start"
+                                    color="inherit"
+                                    onClick={() => setIfDrawerOpen(true)}
+                                >
+                                    <MenuIcon />
+                                </IconButton>
+                            </Hidden>
                             <Typography variant="h5" className={classes.title}>
                                 {match.label}
                             </Typography>
+                            <div className={classes.middleDiv}></div>
+                            <LogOutButton />
                         </Toolbar>
                     </AppBar>
-                    <SwipeableDrawer
-                        anchor="left"
-                        open={ifDrawerOpen}
-                        onClose={() => setIfDrawerOpen(false)}
-                        onOpen={() => setIfDrawerOpen(true)}
-                    >
-                        <div className={classes.drawer}>
-                            <List>
-                                {drawerItems.map((drawerItem) => (
-                                    <ListItem button key={drawerItem.label}>
-                                        {drawerItem.label}
-                                    </ListItem>
-                                ))}
-                            </List>
-                        </div>
-                    </SwipeableDrawer>
-                    <Routes />
+                    <div className={classes.content}>
+                        <Drawer open={ifDrawerOpen} setOpen={setIfDrawerOpen} />
+                        <Routes />
+                    </div>
                 </div>
             </SnackbarProvider>
         </ThemeProvider>

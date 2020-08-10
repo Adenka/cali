@@ -19,13 +19,14 @@ const useStyles = makeStyles((theme) => ({
     wrapper: {
         minHeight: 'calc(100vh - 64px)',
         display: 'flex',
+        flexGrow: 1,
     },
 
     container: {
         margin: 'auto',
         justifyContent: 'center',
         alignItems: 'center',
-        width: 500,
+        maxWidth: 500,
         display: 'flex',
         flexDirection: 'column',
     },
@@ -122,7 +123,6 @@ export default function Login() {
 
             setAuth({ login, token })
             history.push('/home')
-
             ;(rememberMe ? localStorage : sessionStorage).setItem(
                 'auth',
                 JSON.stringify({ login, token })

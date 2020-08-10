@@ -138,4 +138,16 @@ exports.endpointMap = {
 
         return { token }
     },
+
+    logout: async ({ login, token }) => {
+        await db
+            .get()
+            .promiseQuery('DELETE FROM tokens WHERE token = ? AND login = ?', [
+                token,
+                login,
+            ])
+            .catch(throwError(500, 'SQL Error'))
+
+        return {}
+    },
 }
