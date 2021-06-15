@@ -1,11 +1,16 @@
 import React from 'react'
-import { IconButton } from '@material-ui/core'
+import {
+    IconButton,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+} from '@material-ui/core'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import { useAuthContext } from '../utils/GlobalStateContext'
 import { useFetchApi } from '../utils/apiMiddleware'
 import { useHistory } from 'react-router-dom'
 
-export default function LogOutButton() {
+export default function LogOutButton({ insideList }) {
     const fetchApi = useFetchApi()
     const {
         setAuth,
@@ -13,18 +18,31 @@ export default function LogOutButton() {
     } = useAuthContext()
     const history = useHistory()
 
-    const logOut = async () => {
-        await fetchApi('logout', { login, token })
+    const logout = async () => {
+        await fetchApi('logout', { token })
 
-        history.push('/404')
+        history.push('/home')
 
         setAuth({ login: null, token: null })
         ;(token[0] === '1' ? localStorage : sessionStorage).removeItem('auth')
     }
 
     return (
-        <IconButton edge="end" color="inherit" onClick={() => logOut()}>
-            <ExitToAppIcon />
-        </IconButton>
+        <>
+            {login !== null ? (
+                insideList ? (
+                    <ListItem button onClick={logout}>
+                        <ListItemIcon>
+                            <ExitToAppIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Logout" />
+                    </ListItem>
+                ) : (
+                    <IconButton edge="end" color="inherit" onClick={logout}>
+                        <ExitToAppIcon />
+                    </IconButton>
+                )
+            ) : null}
+        </>
     )
 }

@@ -63,12 +63,8 @@ export default function Login() {
 
     const [loginOrRegister, setLoginOrRegister] = useState(0)
     const [login, changeLogin, loginError, setLoginError] = useFormInput('')
-    const [
-        password,
-        changePassword,
-        passwordError,
-        setPasswordError,
-    ] = useFormInput('')
+    const [password, changePassword, passwordError, setPasswordError] =
+        useFormInput('')
     const [
         confirmPassword,
         changeConfirmPassword,

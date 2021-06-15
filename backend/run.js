@@ -4,6 +4,8 @@ const api = require('./api')
 const db = require('./db')
 const bodyParser = require('body-parser')
 
+const { authorizeToken } = require('./utils/token')
+
 const app = express()
 const port = 5000
 
@@ -18,13 +20,15 @@ app.post('/api', (req, res) => {
     if (!func) {
         res.status(469).send({ error: "Invaild endpoint :'(" })
     } else {
-        func(args).then(
-            (result) => res.status(200).send(result),
-            (error) => {
-                console.error(error)
-                res.status(error.code).send({ error })
-            }
-        )
+        authorizeToken(args.auth, endpoint)
+            .then(() => func(args))
+            .then(
+                (result) => res.status(200).send(result),
+                (error) => {
+                    console.error(error)
+                    res.status(error.code).send({ error })
+                }
+            )
     }
 })
 

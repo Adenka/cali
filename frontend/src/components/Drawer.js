@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useAuthContext } from '../utils/GlobalStateContext'
+import LogOutButton from './LogOutButton'
 
 const useStyles = makeStyles({
     drawer: {
@@ -52,8 +53,13 @@ export default function Drawer({ open, setOpen }) {
               { label: 'About us', path: '/404' },
           ]
         : [
-              { label: 'Month', path: '/404' },
+              { label: 'Dashboard', path: '/404' },
               { label: 'Week', path: '/404' },
+              { label: 'Month', path: '/404' },
+              { label: 'Task List', path: '/404' },
+              { divider: true },
+              { label: 'Activities', path: '/404' },
+              { label: 'Plans', path: '/404' },
               { divider: true },
               { label: 'Settings', path: '/404' },
               { divider: true },
@@ -74,6 +80,7 @@ export default function Drawer({ open, setOpen }) {
                         <Divider />
                     )
                 )}
+                {login && isMobile && <LogOutButton insideList />}
             </List>
         </div>
     )

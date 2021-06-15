@@ -20,7 +20,7 @@ export default function Home() {
 
     return (
         <div>
-            {`Hello ${login}! <3`}
+            {`Hello ${login || 'Anonymous'} <3`}
             <Button onClick={check}>Kliknij!</Button>
             <Button onClick={snack}>Kliknij!</Button>
         </div>
